@@ -1,0 +1,22 @@
+{
+  "name": "shop",
+  "version": "0.1.0",
+  "description": "商城小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liangjuncheng1995/shop.git"
+  },
+  "author": "cheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liangjuncheng1995/shop/issues"
+  },
+  "homepage": "https://github.com/liangjuncheng1995/shop#readme",
+  "dependencies": {
+    "lin-ui": "^0.6.13"
+  }
+}
