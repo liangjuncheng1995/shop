@@ -1,32 +1,33 @@
-<view>
-  <image mode="aspectFill" class="top-theme" src="{{themeA.entrance_img}}"></image>
-  <!-- <image webp="true" mode="aspectFill" class="top-theme" src="https://p.upyun.com/demo/webp/webp/animated-gif-0.webp"></image>
+<l-loadmore show end-text="没有更多了" type="{{loadingType}}" >
+  <view slot="content">
+    <image mode="aspectFill" class="top-theme" src="{{themeA.entrance_img}}"></image>
+    <!-- <image webp="true" mode="aspectFill" class="top-theme" src="https://p.upyun.com/demo/webp/webp/animated-gif-0.webp"></image>
   <image mode="aspectFill" class="top-theme" src="http://i2.sleeve.7yue.pro/m33.png"></image> -->
-  <!-- <image style="width: 100%" src="http://07imgmini.eastday.com/mv/20181025185938859782795_1.jpeg" mode="widthFix"></image> -->
-  <swiper class="swiper" indicator-dots indicator-color="#157658" autoplay circular>
-    <block wx:for="{{bannerB.items}}" wx:for-item="item" wx:key="">
-      <swiper-item>
-        <!-- <text>{{item.img}}</text> -->
-        <image class="swiper-img" src="{{item.img}}"></image>
-      </swiper-item>
-    </block>
-  </swiper>
+    <!-- <image style="width: 100%" src="http://07imgmini.eastday.com/mv/20181025185938859782795_1.jpeg" mode="widthFix"></image> -->
+    <swiper class="swiper" indicator-dots indicator-color="#157658" autoplay circular>
+      <block wx:for="{{bannerB.items}}" wx:for-item="item" wx:key="index">
+        <swiper-item>
+          <image class="swiper-img" src="{{item.img}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
 
-  <s-category-grid grid="{{grid}}"></s-category-grid>
+    <s-category-grid grid="{{grid}}"></s-category-grid>
 
-  <image class="activity" src="{{activityD.entrance_img}}"></image>
+    <image class="activity" src="{{activityD.entrance_img}}"></image>
 
-  <s-spu-scroll l-class="spu-scroll" theme="{{themeE}}" wx:if="{{themeE.online}}" spu-list="{{themeESpu}}"></s-spu-scroll>
+    <s-spu-scroll l-class="spu-scroll" theme="{{themeE}}" wx:if="{{themeE.online}}" spu-list="{{themeESpu}}"></s-spu-scroll>
 
-  <image src="{{themeF.entrance_img}}" class="quality"></image>
+    <image src="{{themeF.entrance_img}}" class="quality"></image>
 
-  <s-hot-list banner="{{bannerG}}"></s-hot-list>
+    <s-hot-list banner="{{bannerG}}"></s-hot-list>
 
-  <image src="{{themeH.entrance_img}}" class="fashion"></image>
+    <image src="{{themeH.entrance_img}}" class="fashion"></image>
 
-  <view class="spu-bottom">
-    <image class="title-spu-bottom" src="/imgs/home/title@interest.png"></image>
-    <l-water-flow generic:l-water-flow-item=""></l-water-flow>
+    <view class="spu-bottom">
+      <image class="title-spu-bottom" src="/imgs/home/title@interest.png"></image>
+      <l-water-flow generic:l-water-flow-item="s-spu-preview"></l-water-flow>
+    </view>
+
   </view>
-
-</view>
+</l-loadmore>

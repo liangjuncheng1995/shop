@@ -1,0 +1,32 @@
+function mainPrice(price, discountPrice) {
+  if(!discountPrice) {
+    return {
+      price: price,
+      display: true
+    }
+  } else {
+    return {
+      price: discountPrice,
+      dispay: true
+    }
+  }
+}
+
+function slashedPrice(price, discountPrice) {
+  if (discountPrice) {
+    return {
+      price: price,
+      display: true
+    }
+  } else {
+    return {
+      price: null,
+      display: false
+    }
+  }
+}
+
+module.exports = {
+  mainPrice: mainPrice,
+  slashedPrice: slashedPrice
+}

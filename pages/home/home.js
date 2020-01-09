@@ -14,7 +14,9 @@ import {
 import {
   Activity
 } from '../../model/activity.js'
-
+import {
+  SpuPaging
+} from '../../model/spu-paging.js'
 
 Page({
 
@@ -25,7 +27,9 @@ Page({
     grid: [],
     activityD: null,
     themeE: null,
-    themeESpu: []
+    themeESpu: [],
+    spuPaging: null,
+    loadingType: "loading",
   },
 
   async onLoad(options) {
@@ -36,10 +40,17 @@ Page({
     // })
     // Theme.getHomeLocationA()
     this.initAllData()
+    this.initBottomSpuList()
   },
-  
+
   async initBottomSpuList() {
-    
+    const paging = SpuPaging.getLatestPaging()
+    this.data.spuPaging = paging
+    const data = await paging.getMoreData()
+    if (!data) {
+      return
+    }
+    wx.lin.renderWaterFlow(data.items)
   },
 
   async initAllData() {
@@ -51,7 +62,7 @@ Page({
     // console.log(c)
     // let e = new Theme()
     // console.log(Theme.a)
-    
+
     //循环的操作
     // for(let i in themes) {
     //   console.log(themes[i])
@@ -70,25 +81,25 @@ Page({
     // 类可以保存数据，不能保存状态，类的对象却可以
 
     //写数据接口的时候的原则，调用方需要简单，被调用方逻辑可以写复杂
-    
-    const theme = new Theme()//实例化
-    await theme.getThemes()//请求所有主题的接口
-    const themeA = theme.getHomeLocationA()//获取主题A的数据
-    const themeE = theme.getHomeLocationE()//获取主题E的数据
+
+    const theme = new Theme() //实例化
+    await theme.getThemes() //请求所有主题的接口
+    const themeA = theme.getHomeLocationA() //获取主题A的数据
+    const themeE = theme.getHomeLocationE() //获取主题E的数据
     let themeESpu = []
-    if(themeE.online) {//是否上线
-      const themeESpuList = await Theme.getHomeLocationESpu()//获取每周上新的数据列表
+    if (themeE.online) { //是否上线
+      const themeESpuList = await Theme.getHomeLocationESpu() //获取每周上新的数据列表
       if (themeESpuList) {
-        themeESpu = themeESpuList.spu_list.slice(0,8)
+        themeESpu = themeESpuList.spu_list.slice(0, 8)
       }
     }
     const themeF = theme.getHomeLocationF() //获取主题F的数据
-    
+
     const bannerB = await Banner.getHomeLocationB()
     const grid = await Category.getHomeLocationC()
     const activityD = await Activity.getHomeLocationD()
 
-    const bannerG = await Banner.getHomeLocationG() 
+    const bannerG = await Banner.getHomeLocationG()
 
     const themeH = theme.getHomeLocationH() //获取主题H的数据
 
@@ -108,8 +119,17 @@ Page({
     })
   },
 
-  onReachBottom: function() {
-
+  async onReachBottom() {
+    const data = await this.data.spuPaging.getMoreData()
+    if (!data) {
+      return
+    }
+    wx.lin.renderWaterFlow(data.items)
+    if(!data.moreData) {
+      this.setData({
+        loadingType: 'end'
+      })
+    }
   },
 
 
