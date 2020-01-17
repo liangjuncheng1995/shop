@@ -69,7 +69,7 @@
 					"id": 1,
 					"name": "商品详情页面",
 					"pathName": "pages/detail/detail",
-					"query": "pid=23",
+					"query": "pid=2",
 					"scene": null
 				}
 			]

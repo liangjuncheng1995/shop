@@ -4,19 +4,19 @@ import {
 } from '../../config/config.js'
 import {
   Theme
-} from '../../model/theme.js'
+} from '../../models/theme.js'
 import {
   Banner
-} from '../../model/banner.js'
+} from '../../models/banner.js'
 import {
   Category
-} from '../../model/category.js'
+} from '../../models/category.js'
 import {
   Activity
-} from '../../model/activity.js'
+} from '../../models/activity.js'
 import {
   SpuPaging
-} from '../../model/spu-paging.js'
+} from '../../models/spu-paging.js'
 
 Page({
 
@@ -39,7 +39,7 @@ Page({
     //   })
     // })
     // Theme.getHomeLocationA()
-    this.initAllData()
+    // this.initAllData()
     this.initBottomSpuList()
   },
 
