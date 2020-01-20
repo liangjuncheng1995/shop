@@ -4,15 +4,15 @@ class Matrix {
     this.m = matrix
   }
 
-  get rowsNum() {
+  get rowsNum() {//行
     return this.m.length
   }
 
-  get colsNum() {
+  get colsNum() {//列
     return this.m[0].length
   }
 
-  forEach(cb) {
+  each(cb) {
     for (let j = 0; j < this.colsNum; j++) {
       for (let i = 0; i < this.rowsNum; i++) {
         const element = this.m[i][j]
@@ -23,15 +23,15 @@ class Matrix {
 
   // numpy
 
-  transpose() {
+  transpose() {//矩阵的倒置
     const desAttr = []
     for (let j = 0; j < this.colsNum; j++) {
       desAttr[j] = []
       for (let i = 0; i < this.rowsNum; i++) {
         desAttr[j][i] = this.m[i][j]
       }
-      return desAttr
     }
+    return desAttr
   }
 }
 
