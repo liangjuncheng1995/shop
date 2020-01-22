@@ -10,7 +10,7 @@ class FenceGroup {
   skuList = []
   fences = []
 
-  
+
 
   constructor(spu) {
     this.spu = spu
@@ -36,9 +36,9 @@ class FenceGroup {
   initFences() {
     const matrix = this._createMatrix(this.skuList)
     const fences = []
-    const AT = matrix.transpose()//数组的倒置
-    AT.forEach(r => {//数组的去重和数组的包装
-      const fence  = new Fence(r)
+    const AT = matrix.transpose() //数组的倒置
+    AT.forEach(r => { //数组的去重和数组的包装
+      const fence = new Fence(r)
       fence.init()
       fences.push(fence)
     })
@@ -49,6 +49,16 @@ class FenceGroup {
     const fence = new Fence()
     // fence.pushValueTitle(element.value)
     return fence
+  }
+
+  eachCell(cb) {
+    console.log(cb)
+    for (let i = 0; i < this.fences.length; i++) {
+      for (let j = 0; j < this.fences[i].cells.length; j++) {
+        const cell = this.fences[i].cells[j]
+        cb(cell, i, j)
+      }
+    }
   }
 
   _createMatrix(skuList) {

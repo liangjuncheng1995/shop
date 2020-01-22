@@ -5,10 +5,17 @@ import {
 class Cell {
   title
   id
-  status = CellStatus.SELECTED
+  status = CellStatus.WAITING
+  spec
+
   constructor(spec) {
     this.title = spec.value
     this.id = spec.value_id
+    this.spec = spec
+  }
+
+  getCellcode() {
+    return this.spec.key_id + '-' + this.spec.value_id
   }
 }
  

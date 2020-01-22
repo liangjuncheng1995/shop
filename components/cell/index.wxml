@@ -1,4 +1,4 @@
-<view bindtap="onTap" class="container {{c.statusStyle(cell.status).outer}}">
+<view  bindtap="onTap" class="container {{c.statusStyle(cell.status).outer}}">
   <view class="inner-container {{c.statusStyle(cell.status).inner}}">
     <text>{{cell.title}}</text>
   </view>
