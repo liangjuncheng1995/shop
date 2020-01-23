@@ -85,7 +85,7 @@ class Judger {
       if (x === i) {
         //当前行
         if (this.skuPending.isSelected(cell,x)) {//判断当前行有没有选中的
-          return
+          return //如果当前行有选中的cell的情况下，直接退出循环
         }
         const cellCode = this._getCellCode(cell.spec)
         joiner.join(cellCode) //使用 #号连接
