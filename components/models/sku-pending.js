@@ -1,3 +1,6 @@
+import {
+  Cell
+} from './cell.js'
 class SkuPending {
   pending = [] //判断当前行是否有选中的状态
 
@@ -5,7 +8,15 @@ class SkuPending {
 
   }
 
-  insertCell(cell, x) {// 选中的cell 的时候
+
+  init(sku) {//初始化默认的sku
+    for (let i = 0; i < sku.specs.length; i++) {
+      const cell = new Cell(sku.specs[i])
+      this.insertCell(cell, i)
+    }
+  }
+
+  insertCell(cell, x) { // 选中的cell 的时候
     this.pending[x] = cell
   }
 
@@ -20,7 +31,7 @@ class SkuPending {
 
   isSelected(cell, x) {
     const pendingCell = this.pending[x]
-    if (!pendingCell) {//判断当前行是否有选中的状态,如果没有选中的状态的话 就返回false
+    if (!pendingCell) { //判断当前行是否有选中的状态,如果没有选中的状态的话 就返回false
       return false
     }
     return cell.id === pendingCell.id

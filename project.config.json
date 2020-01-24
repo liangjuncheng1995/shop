@@ -71,6 +71,13 @@
 					"pathName": "pages/detail/detail",
 					"query": "pid=2",
 					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "无规格测试的页面",
+					"pathName": "pages/detail/detail",
+					"query": "pid=12",
+					"scene": null
 				}
 			]
 		}

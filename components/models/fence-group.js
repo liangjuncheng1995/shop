@@ -18,6 +18,27 @@ class FenceGroup {
 
   }
 
+  getDefaultSku() {
+    const defaultSkuId = this.spu.default_sku_id
+    if (!defaultSkuId) {
+      return
+    }
+    return this.skuList.find(s => s.id === defaultSkuId)//返回对应id的sku
+  }
+
+  setCellStatusById(cellId, status) {
+    this.eachCell(cell => {
+      if(cell.id === cellId) {
+        cell.status = status
+      }
+    })
+  }
+
+  setCellStatusByXY(x, y, status) {//点击更改选择状态的方法
+    console.log(this.fences[x])
+    this.fences[x].cells[y].status = status
+  }
+
   initFences1() {
     const matrix = this._createMatrix(this.skuList)
     const fences = []
