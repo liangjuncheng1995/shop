@@ -27,8 +27,13 @@ class Judger {
     this._initSkuPending()
   }
 
+  isSkuIntact() {
+    return this.skuPending.isIntact()
+  }
+
   _initSkuPending() {
-    this.skuPending = new SkuPending()
+    const specsLenght = this.fenceGroup.fences.length
+    this.skuPending = new SkuPending(specsLenght)
     const defaultSku = this.fenceGroup.getDefaultSku()//获取fenceGruop类的默认sku
     if (!defaultSku) {//如果没有默认的sku 则直接停止执行
       return

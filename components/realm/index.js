@@ -28,7 +28,8 @@ Component({
     price: String,
     discountPrice: String,
     stock: Number,
-    noSpec: Boolean
+    noSpec: Boolean,
+    skuIntact: Boolean
   },
   lifetimes: {
     attached() {
@@ -42,7 +43,8 @@ Component({
       }
       if(Spu.isNoSpec(spu)) {
         this.setData({
-          noSpec: true
+          noSpec: true,
+          // skuIntact:
         })
         this.bindSkuData(spu.sku_list[0])
         return
@@ -93,7 +95,8 @@ Component({
     },
     bindInitData(fenceGroup) {
       this.setData({
-        fences: fenceGroup.fences
+        fences: fenceGroup.fences,
+        skuIntact: this.data.judger.isSkuIntact()
       })
     },
     onCellTap(event) {
