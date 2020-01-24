@@ -11,6 +11,9 @@ import {
 import {
   Cell
 } from '../models/cell.js'
+import {
+  Cart
+} from '../../models/cart.js'
 
 Component({
   /**
@@ -32,7 +35,8 @@ Component({
     discountPrice: String,
     stock: Number,
     noSpec: Boolean,
-    skuIntact: Boolean
+    skuIntact: Boolean,
+    currentSkuCount: Cart.SKU_MIN_COUNT
   },
   lifetimes: {
     attached() {
@@ -44,7 +48,7 @@ Component({
       if (!spu) {
         return
       }
-      if(Spu.isNoSpec(spu)) {
+      if (Spu.isNoSpec(spu)) {
         this.processNoSpec(spu)
       } else {
         this.processHasSpec(spu)
@@ -62,7 +66,7 @@ Component({
         // skuIntact:
       })
       this.bindSkuData(spu.sku_list[0])
-      // this.setStockStatus(spu.sku_list[0].stock, this.data.currentSkuCount)
+      this.setStockStatus(spu.sku_list[0].stock, this.data.currentSkuCount)
     },
     processHasSpec(spu) {
       const fencesGroup = new FenceGroup(spu)
@@ -70,9 +74,10 @@ Component({
       const judger = new Judger(fencesGroup)
       this.data.judger = judger
 
-      const defalutSku = fencesGroup.getDefaultSku()//判断有没有默认的sku
-      if (defalutSku) {//如果有默认的sku则直接渲染在页面上
+      const defalutSku = fencesGroup.getDefaultSku() //判断有没有默认的sku
+      if (defalutSku) { //如果有默认的sku则直接渲染在页面上
         this.bindSkuData(defalutSku)
+        this.setStockStatus(defalutSku.stock, this.data.currentSkuCount)
       } else {
         this.bindSpuData()
       }
@@ -118,6 +123,26 @@ Component({
       })
     },
 
+    setStockStatus(stock, currentCount) {
+      this.setData({
+        outStock: this.isOutOfStock(stock, currentCount)
+      })
+    },
+
+    isOutOfStock(stock, currentCount) {
+      return stock < currentCount
+    },
+
+    onSelectCount(event) {
+      const currentCount = event.detail.count
+      this.data.currentSkuCount = currentCount
+
+      if (this.data.judger.isSkuIntact()) {
+        const sku = this.data.judger.getDeterminateSku()
+        this.setStockStatus(sku.stock, currentCount)
+      }
+    },
+
     onCellTap(event) {
       let data = event.detail.cell
       const x = event.detail.x
@@ -125,13 +150,14 @@ Component({
 
       const cell = new Cell(data.spec)
       cell.status = data.status
-      
+
       const judger = this.data.judger
       judger.judge(cell, x, y)
       const skuIntact = judger.isSkuIntact()
-      if(skuIntact) {
+      if (skuIntact) {
         const currentSku = judger.getDeterminateSku()
         this.bindSkuData(currentSku)
+        this.setStockStatus(currentSku.stock, this.data.currentSkuCount)
       }
       this.bindTipData()
       console.log(this.data.skuIntact)

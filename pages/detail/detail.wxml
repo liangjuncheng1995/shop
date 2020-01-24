@@ -1,1 +1,5 @@
-<s-realm spu="{{spu}}"></s-realm>
+<!-- <s-realm spu="{{spu}}"></s-realm> -->
+<s-tabbar></s-tabbar>
+
+<!-- <l-icon name="home" l-class="sleeve"></l-icon>
+<l-icon name="radio" l-class="sleeve"></l-icon> -->
