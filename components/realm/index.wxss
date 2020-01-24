@@ -28,6 +28,12 @@
 .sku-pending {
   font-size: 22rpx;
 }
+.sku-pending > text:first-child{
+  color: #999999;
+}
+.sku-pending > text:nth-child(2){
+  color: #666666;
+}
 .hr {
   margin-top: 30rpx;
   width: 690rpx;

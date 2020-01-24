@@ -8,6 +8,9 @@ import {
 import {
   Spu
 } from '../../models/spu.js'
+import {
+  Cell
+} from '../models/cell.js'
 
 Component({
   /**
@@ -42,38 +45,40 @@ Component({
         return
       }
       if(Spu.isNoSpec(spu)) {
-        this.setData({
-          noSpec: true,
-          // skuIntact:
-        })
-        this.bindSkuData(spu.sku_list[0])
-        return
-      }
-
-      const fencesGroup = new FenceGroup(spu)
-      // fencesGroup.initFences()
-      fencesGroup.initFences()
-
-      // console.log(fencesGroup.fences)
-      // console.log(fencesGroup)
-
-      const judger = new Judger(fencesGroup)
-      this.data.judger = judger
-
-      const defalutSku = fencesGroup.getDefaultSku()//判断有没有默认的sku
-      if(defalutSku) {//如果有默认的sku则直接渲染在页面上
-        this.bindSkuData(defalutSku)
+        this.processNoSpec(spu)
       } else {
-        this.bindSpuData() 
+        this.processHasSpec(spu)
       }
-      
-      this.bindInitData(fencesGroup)
+      // this.bindInitData(fencesGroup)
     }
   },
   /**
    * 组件的方法列表
    */
   methods: {
+    processNoSpec(spu) {
+      this.setData({
+        noSpec: true,
+        // skuIntact:
+      })
+      this.bindSkuData(spu.sku_list[0])
+      // this.setStockStatus(spu.sku_list[0].stock, this.data.currentSkuCount)
+    },
+    processHasSpec(spu) {
+      const fencesGroup = new FenceGroup(spu)
+      fencesGroup.initFences()
+      const judger = new Judger(fencesGroup)
+      this.data.judger = judger
+
+      const defalutSku = fencesGroup.getDefaultSku()//判断有没有默认的sku
+      if (defalutSku) {//如果有默认的sku则直接渲染在页面上
+        this.bindSkuData(defalutSku)
+      } else {
+        this.bindSpuData()
+      }
+      this.bindTipData()
+      this.bindFenceGroupData(fencesGroup)
+    },
     bindSpuData() {
       const spu = this.properties.spu
       this.setData({
@@ -81,7 +86,6 @@ Component({
         title: spu.title,
         price: spu.price,
         discountPrice: spu.discount_price,
-       
       })
     },
     bindSkuData(sku) {
@@ -90,24 +94,48 @@ Component({
         title: sku.title,
         price: sku.price,
         discountPrice: sku.discount_price,
-        stock: sku.stock
+        stock: sku.stock,
       })
     },
-    bindInitData(fenceGroup) {
+
+    bindTipData() {
       this.setData({
-        fences: fenceGroup.fences,
-        skuIntact: this.data.judger.isSkuIntact()
+        skuIntact: this.data.judger.isSkuIntact(),
+        currentValues: this.data.judger.getCurrentValues(),
+        missingKeys: this.data.judger.getMissingKeys()
       })
     },
+    // bindInitData(fenceGroup) {
+    //   this.setData({
+    //     fences: fenceGroup.fences,
+    //     skuIntact: this.data.judger.isSkuIntact()
+    //   })
+    // },
+
+    bindFenceGroupData(fenceGroup) {
+      this.setData({
+        fences: fenceGroup.fences
+      })
+    },
+
     onCellTap(event) {
-      const cell = event.detail.cell
+      let data = event.detail.cell
       const x = event.detail.x
       const y = event.detail.y
+
+      const cell = new Cell(data.spec)
+      cell.status = data.status
+      
       const judger = this.data.judger
       judger.judge(cell, x, y)
-      this.setData({
-        fences: judger.fenceGroup.fences
-      })
+      const skuIntact = judger.isSkuIntact()
+      if(skuIntact) {
+        const currentSku = judger.getDeterminateSku()
+        this.bindSkuData(currentSku)
+      }
+      this.bindTipData()
+      console.log(this.data.skuIntact)
+      this.bindFenceGroupData(judger.fenceGroup)
     }
   }
 })

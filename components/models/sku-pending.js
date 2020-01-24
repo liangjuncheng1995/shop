@@ -1,6 +1,9 @@
 import {
   Cell
 } from './cell.js'
+import {
+  Joiner
+} from '../../utils/joiner.js'
 class SkuPending {
   pending = [] //判断当前行是否有选中的状态
   size
@@ -11,22 +14,49 @@ class SkuPending {
 
 
   init(sku) { //初始化默认的sku
-    this.size = sku.specs.length //sku的类型个数
+    // this.size = sku.specs.length //sku的类型个数
     for (let i = 0; i < sku.specs.length; i++) {
       const cell = new Cell(sku.specs[i])
       this.insertCell(cell, i)
     }
   }
 
-  isIntact() {
-    if (this.size !== this.pending.length) {
-      return false
-    }
+  getCurrentSpecValues() {
+    const values = this.pending.map(cell => {
+      return cell ? cell.spec.value : null
+    })
+    return values
+  }
+
+  getMissingSpecKeysIndex() {
+    const keysIndex = []
     for (let i = 0; i < this.size; i++) {
-      if(this._isEmptyPart(i)) {
+      if (!this.pending[i]) {
+        keysIndex.push(i)
+      }
+    }
+    return keysIndex
+  }
+
+  getSkuCode() {
+    const joiner = new Joiner('#')
+    this.pending.forEach(cell => {
+      const cellCode = cell.getCellcode()
+      joiner.join(cellCode)
+    })
+    return joiner.getStr()
+  }
+
+  isIntact() {
+    // if (this.size !== this.pending.length) {
+    //   return false
+    // }
+    for (let i = 0; i < this.size; i++) {
+      if (this._isEmptyPart(i)) {
         return false
       }
     }
+
     return true
   }
 

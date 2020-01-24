@@ -31,6 +31,17 @@ class Judger {
     return this.skuPending.isIntact()
   }
 
+  getCurrentValues() {
+    return this.skuPending.getCurrentSpecValues()
+  }
+
+  getMissingKeys() {
+    const missingKeysIndex = this.skuPending.getMissingSpecKeysIndex()
+    return missingKeysIndex.map(i=> {
+      return this.fenceGroup.fences[i].title
+    })
+  }
+
   _initSkuPending() {
     const specsLenght = this.fenceGroup.fences.length
     this.skuPending = new SkuPending(specsLenght)
@@ -76,7 +87,7 @@ class Judger {
       if (!path) {
         return
       }
-      const isIn = this._inInDict(path) //在字典寻找是否有sku的数据
+      const isIn = this._isInDict(path) //在字典寻找是否有sku的数据
       if (isIn) {
         this.fenceGroup.setCellStatusByXY(x, y, CellStatus.WAITING)
       } else {
@@ -85,7 +96,15 @@ class Judger {
     })
   }
 
-  _inInDict(path) { //寻找sku码的字典
+  getDeterminateSku() {
+    const code = this.skuPending.getSkuCode()
+    console.log(code)
+    const sku = this.fenceGroup.getSku(code)
+    return sku
+  }
+  
+
+  _isInDict(path) { //寻找sku码的字典
     return this.pathDict.includes(path)
   }
 
