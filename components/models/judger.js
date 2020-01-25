@@ -83,7 +83,7 @@ class Judger {
       // console.log(y)
 
       const path = this._findpotentialPath(cell, x, y)
-      console.log(path)
+      // console.log(path)
       if (!path) {
         return
       }
@@ -98,7 +98,6 @@ class Judger {
 
   getDeterminateSku() {
     const code = this.skuPending.getSkuCode()
-    console.log(code)
     const sku = this.fenceGroup.getSku(code)
     return sku
   }
@@ -113,13 +112,13 @@ class Judger {
   // 对于某个cell ,不需要考虑当前行其他元素是否已选的
   _changeOtherCellStatus(cell, x, y) {
     const path = this._findpotentialPath(cell, x, y)
-    console.log(path)
+    // console.log(path)
   }
 
   _findpotentialPath(cell, x, y) {
-    console.log(cell)
-    console.log(x) //当前行
-    console.log(this.fenceGroup.fences) //所有的行
+    // console.log(cell)
+    // console.log(x) //当前行
+    // console.log(this.fenceGroup.fences) //所有的行
     const joiner = new Joiner('#')
     for (let i = 0; i < this.fenceGroup.fences.length; i++) {
 

@@ -1,5 +1,41 @@
-<!-- <s-realm spu="{{spu}}"></s-realm> -->
-<s-tabbar></s-tabbar>
+<!--  -->
+<scroll-view style='height:{{h}}rpx;' scroll-y>
+  <swiper class="top" autoplay indicator-dots>
+    <block wx:for="{{spu.spu_img_list}}">
+      <swiper-item>
+        <image class="top" mode="aspectFill" src="{{item.img}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  <s-spu-description spu="{{spu}}"></s-spu-description>
+
+  <view bind:tap="onAddToCart" class="sku-pending" wx:if="{{!specs.noSpec}}">
+    <view class="specs">
+      <text wx:if="{{!specs.skuIntact}}">请选择：</text>
+      <text wx:else>已选：</text>
+      <text wx:if="{{!specs.skuIntact}}">{{specs.missingKeys}}</text>
+      <text wx:else>{{specs.currentValues}}</text>
+    </view>
+    <view class="arrow-right">
+      <l-icon name="right" color="#157658" size="24"></l-icon>
+    </view>
+  </view>
+  <view class="explain">
+    <s-sale-explain texts="{{explain}}"></s-sale-explain>
+  </view>
+
+  <view class="detail-img-container">
+    <block wx:for="{{spu.spu_detail_img_list}}" wx:key="index">
+      <image mode="widthFix" class="detail-img" src="{{item.img}}"></image>
+    </block>
+  </view>
+
+</scroll-view>
+<l-popup content-align="bottom" show="{{showRealm}}">
+  <s-realm bind:specchange="onSpecChange" orderWay="{{orderWay}}" spu="{{spu}}"></s-realm>
+</l-popup>
+<s-tabbar class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
+</s-tabbar>
 
 <!-- <l-icon name="home" l-class="sleeve"></l-icon>
 <l-icon name="radio" l-class="sleeve"></l-icon> -->

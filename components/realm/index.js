@@ -20,7 +20,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    spu: Object
+    spu: Object,
+    orderWay: String
   },
 
   /**
@@ -53,6 +54,7 @@ Component({
       } else {
         this.processHasSpec(spu)
       }
+      this.triggerSpecEvent()
       // this.bindInitData(fencesGroup)
     }
   },
@@ -84,6 +86,23 @@ Component({
       this.bindTipData()
       this.bindFenceGroupData(fencesGroup)
     },
+
+    triggerSpecEvent() {
+      const noSpec = Spu.isNoSpec(this.properties.spu)
+      if(noSpec) {
+        this.triggerEvent('specchange', {
+          noSpec: Spu.isNoSpec(this.properties.spu)
+        })
+      } else {
+        this.triggerEvent('specchange', {
+          noSpec: Spu.isNoSpec(this.properties.spu),
+          skuIntact: this.data.judger.isSkuIntact(),
+          currentValues: this.data.judger.getCurrentValues(),
+          missingKeys: this.data.judger.getMissingKeys()
+        })
+      }
+    },
+
     bindSpuData() {
       const spu = this.properties.spu
       this.setData({
@@ -162,6 +181,7 @@ Component({
       this.bindTipData()
       console.log(this.data.skuIntact)
       this.bindFenceGroupData(judger.fenceGroup)
+      this.triggerSpecEvent()
     }
   }
 })
