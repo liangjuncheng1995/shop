@@ -5,7 +5,7 @@ class Paging {
   start
   count
   req
-  locker
+  locker //锁
   url
   moreData = true
 
@@ -51,6 +51,8 @@ class Paging {
       this.start += this.count
     }
     this._accumulate(paging.items)
+
+    // 组装数据结构的返回 
     return {
       empty: false,
       items: paging.items,
@@ -67,7 +69,7 @@ class Paging {
     return pageNum < totalPage - 1
   }
 
-  _getCurrentReq() {
+  _getCurrentReq() {//组装请求的对象
     let url = this.url
     const params = `start=${this.start}&count=${this.count}`
     if(url.includes('?')) {

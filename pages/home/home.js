@@ -39,7 +39,9 @@ Page({
     //   })
     // })
     // Theme.getHomeLocationA()
+    //开启头部主题的数据
     // this.initAllData()
+    // 开底部瀑布流的数据
     this.initBottomSpuList()
   },
 

@@ -17,7 +17,8 @@ class FenceGroup {
 
   initFences1() {
     const matrix = this._createMatrix(this.skuList)
-    const fences = []
+    console.log(matrix)
+    const fences = []//定义各自规格值的数组，作为最终的输出
     let currentJ = -1
     matrix.forEach((element, i, j) => {
       if (currentJ != j) {
@@ -32,6 +33,8 @@ class FenceGroup {
 
   initFences() {
     const matrix = this._createMatrix(this.skuList)
+    console.log("转置前的二维数组")
+    console.log(matrix)
     const fences = []
     const AT = matrix.transpose()
     console.log(AT)

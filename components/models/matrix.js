@@ -12,7 +12,8 @@ class Matrix {
     return this.m[0].length
   }
 
-  forEach(cb) {
+  forEach(cb) {//cb 表示回调函数
+    // j表示列
     for (let j = 0; j < this.colsNum; j++) {
       for (let i = 0; i < this.rowsNum; i++) {
         const element = this.m[i][j]
@@ -30,8 +31,9 @@ class Matrix {
       for (let i = 0; i < this.rowsNum; i++) {
         desAttr[j][i] = this.m[i][j]
       }
-      return desAttr
+      // return desAttr
     }
+    return desAttr
   }
 }
 
