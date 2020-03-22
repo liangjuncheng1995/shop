@@ -3,8 +3,8 @@ import {
 } from '../../core/enum.js'
 
 class Cell {
-  title
-  id
+  title //规格值的名字
+  id //规格值的唯一标识
   status = CellStatus.SELECTED
   constructor(spec) {
     this.title = spec.value

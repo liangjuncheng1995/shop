@@ -22,8 +22,8 @@ Component({
       this.triggerEvent("celltap", {
         cell: this.properties.cell
       }, {
-        bubbles: true,
-        composed: true
+          bubbles: true,//冒泡
+          composed: true//跨组件的边界
       })
     }
   }

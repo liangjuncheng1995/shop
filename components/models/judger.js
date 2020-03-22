@@ -5,7 +5,7 @@ import {
 class Judger {
 
   fenceGroup
-  pathDict = []
+  pathDict = [] //保存所有可能的sku code码的路径组合
 
 
   constructor(fenceGroup) {
