@@ -40,7 +40,7 @@ Component({
       if (!spu) {
         return
       }
-      if(Spu.isNoSpec(spu)) {
+      if(Spu.isNoSpec(spu)) {//无规格的情况
         this.setData({
           noSpec: true
         })

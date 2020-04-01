@@ -72,7 +72,7 @@ class FenceGroup {
     return fence
   }
 
-  eachCell(cb) {
+  eachCell(cb) { //循环输出每一个cell
     console.log(cb)
     for (let i = 0; i < this.fences.length; i++) {
       for (let j = 0; j < this.fences[i].cells.length; j++) {

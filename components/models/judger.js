@@ -60,7 +60,7 @@ class Judger {
       this._changeCurrentCellStatus(cell, x, y) //点击cell之后，状态的改变
     }
     // this.fenceGroup.eachCell(this._changeOtherCellStatus)
-    this.fenceGroup.eachCell((cell, x, y) => {
+    this.fenceGroup.eachCell((cell, x, y) => {//这个eachCell 是判断每一个cell的状态
       // console.log(cell) //这个cell 和上面的 cell 不一样，上面的点击的cell,这行cell 是遍历服务器返回的所有cell
       // 可以说是每点击一个cell之后，都要遍历所有的sku code 码是否都在字典里面
       // console.log(x)
@@ -88,11 +88,11 @@ class Judger {
   // 对于某个cell 它的潜在路径应该是，它自己加上其他的已选元素（普适）
   // 对于某个cell ,不需要考虑当前行其他元素是否已选的
   _changeOtherCellStatus(cell, x, y) {
-    const path = this._findpotentialPath(cell, x, y)
+    // const path = this._findpotentialPath(cell, x, y)
     console.log(path)
   }
 
-  _findpotentialPath(cell, x, y) {
+  _findpotentialPath(cell, x, y) {//寻找潜在的路径
     console.log(cell)
     console.log(x) //当前行
     console.log(this.fenceGroup.fences) //所有的行
@@ -105,12 +105,12 @@ class Judger {
         if (this.skuPending.isSelected(cell, x)) { //判断当前行有没有选中的
           return //如果当前行有选中的cell的情况下，直接退出循环
         }
-        const cellCode = this._getCellCode(cell.spec)
+        const cellCode = this._getCellCode(cell.spec)//获取当前行的code
         joiner.join(cellCode) //使用 #号连接
       } else {
         //其他行
-        if (selected) { //如果
-          const selectedCelCode = this._getCellCode(selected.spec)
+        if (selected) { //如果其他行有已经被选择的code,则组成对应的skucode的路径
+          const selectedCelCode = this._getCellCode(selected.spec)//获取其他行的code
           joiner.join(selectedCelCode)
         }
       }
@@ -119,6 +119,7 @@ class Judger {
   }
 
   _getCellCode(spec) {
+    //这个spec 是通过渲染层的事件传过来的
     return spec.key_id + '-' + spec.value_id
   }
 
