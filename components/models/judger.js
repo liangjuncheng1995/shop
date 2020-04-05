@@ -31,11 +31,11 @@ class Judger {
     return this.skuPending.isIntact()
   }
 
-  getCurrentValues() {
+  getCurrentValues() {//获取已经选好的规格值
     return this.skuPending.getCurrentSpecValues()
   }
 
-  getMissingKeys() {
+  getMissingKeys() {//获取没有选取的规格名
     const missingKeysIndex = this.skuPending.getMissingSpecKeysIndex()
     return missingKeysIndex.map(i=> {
       return this.fenceGroup.fences[i].title
@@ -43,8 +43,8 @@ class Judger {
   }
 
   _initSkuPending() {
-    const specsLenght = this.fenceGroup.fences.length
-    this.skuPending = new SkuPending(specsLenght)
+    const specsLength = this.fenceGroup.fences.length
+    this.skuPending = new SkuPending(specsLength)
     const defaultSku = this.fenceGroup.getDefaultSku()//获取fenceGruop类的默认sku
     if (!defaultSku) {//如果没有默认的sku 则直接停止执行
       return

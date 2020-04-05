@@ -98,7 +98,7 @@ Component({
       })
     },
 
-    bindTipData() {
+    bindTipData() { //选择的提示
       this.setData({
         skuIntact: this.data.judger.isSkuIntact(),
         currentValues: this.data.judger.getCurrentValues(),
@@ -129,7 +129,7 @@ Component({
       const judger = this.data.judger
       judger.judge(cell, x, y)
       const skuIntact = judger.isSkuIntact()
-      if(skuIntact) {
+      if(skuIntact) {//判断sku是否完整的
         const currentSku = judger.getDeterminateSku()
         this.bindSkuData(currentSku)
       }

@@ -47,7 +47,7 @@ class SkuPending {
     return joiner.getStr()
   }
 
-  isIntact() {
+  isIntact() {//判断所选的sku是否完整的
     // if (this.size !== this.pending.length) {
     //   return false
     // }
