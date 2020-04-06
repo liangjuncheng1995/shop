@@ -156,7 +156,7 @@ Component({
       const currentCount = event.detail.count
       this.data.currentSkuCount = currentCount
 
-      if (this.data.judger.isSkuIntact()) {
+      if (this.data.judger.isSkuIntact()) {//判断是否是完整的sku
         const sku = this.data.judger.getDeterminateSku()
         this.setStockStatus(sku.stock, currentCount)
       }
