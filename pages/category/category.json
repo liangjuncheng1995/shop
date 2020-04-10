@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "s-spu-category": "/components/sub-category/index"
+    "s-sub-category": "/components/sub-category/index"
   }
 }

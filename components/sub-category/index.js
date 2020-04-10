@@ -21,7 +21,6 @@ Component({
   methods: {
     onTapGridItem(event) {
       const id = event.detail.key
-      debugger
       this.triggerEvent('itemtap', {
         cid: id
       })

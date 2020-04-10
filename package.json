@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/liangjuncheng1995/shop#readme",
   "dependencies": {
-    "lin-ui": "^0.6.13"
+    "lin-ui": "^0.7.5"
   }
 }

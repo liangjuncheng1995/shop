@@ -31,6 +31,7 @@ container {
     width: 510rpx;
     height: 200rpx;
     margin-top: 16rpx;
+    display: block;
 }
 
 .title {
@@ -38,4 +39,6 @@ container {
     font-size: 24rpx;
     color: #999999;
     margin-bottom: 30rpx;
+    text-align: center;
+    display: block;
 }

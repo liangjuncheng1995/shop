@@ -48,7 +48,7 @@
   justify-content: center;
 }
 .icons > view:nth-child(2) {
-  /* padding-top: 6rpx; */
+  padding-top: 6rpx;
 }
 
 .icons text {
