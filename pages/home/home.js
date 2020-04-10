@@ -47,6 +47,7 @@ Page({
     const paging = SpuPaging.getLatestPaging()
     this.data.spuPaging = paging
     const data = await paging.getMoreData()
+    console.log(data)
     if (!data) {
       return
     }
@@ -121,6 +122,7 @@ Page({
 
   async onReachBottom() {
     const data = await this.data.spuPaging.getMoreData()
+    console.log(data)
     if (!data) {
       return
     }
