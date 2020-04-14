@@ -1,5 +1,5 @@
 <view class="header">
-  <l-search-bar l-class="input" maxlength="9" bg-color="#f1f1f1" placeholder="输入商品名称" bind:linconfirm='onSearch'>
+  <l-search-bar l-class="input" maxlength="9" bg-color="#f1f1f1" placeholder="输入商品名称" bind:linconfirm='onSearch' bind:lincancel="onCancel">
 
   </l-search-bar>
 </view>
@@ -18,7 +18,7 @@
       </view>
       <view class="history-tags">
         <block wx:for="{{historyTags}}" wx:key="index">
-          <l-tag l-class="tag" name="{{item}}">
+          <l-tag bind:lintap="onSearch" l-class="tag" name="{{item}}">
             {{item}}
           </l-tag>
         </block>
@@ -33,7 +33,7 @@
       </view>
       <view class="history-tags">
         <block wx:for="{{hotTags}}" wx:key="index">
-          <l-tag select="{{item.highlight}}" l-select-class="tag-selected" l-class="tag" name="{{item.title}}">
+          <l-tag bind:lintap="onSearch" select="{{item.highlight}}" l-select-class="tag-selected" l-class="tag" name="{{item.title}}">
             {{item.title}}
           </l-tag>
         </block>
@@ -43,7 +43,9 @@
 
   <view wx:else>
     <block wx:for="{{items}}">
-      
+      <s-spu-preview-r data='{{item}}'></s-spu-preview-r>
     </block>
   </view>
+
+  <l-loading></l-loading>
 </view>
