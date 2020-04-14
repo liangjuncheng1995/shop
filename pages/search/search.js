@@ -5,6 +5,7 @@ import {
 import {
   Tag
 } from '../../models/tag.js'
+import { Search } from '../../models/search.js'
 const history = new Historykeyword()
 Page({
 
@@ -27,12 +28,24 @@ Page({
     })
   },
 
-  onSearch(event) {
+  async onSearch(event) {
     const keyword = event.detail.value
     history.save(keyword)
     this.setData({
       historyTags: history.get()
     })
+
+    const paging = Search.search(keyword)
+    const data = await paging.getMoreData()
+    this.bindItems(data)
+  },
+
+  bindItems(data) {
+    if(data.accumulator.length !== 0) {
+      this.setData({
+        items: data.accumulator
+      })
+    }
   },
 
   onDeleteHistory(event) {
