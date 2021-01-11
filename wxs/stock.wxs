@@ -1,9 +1,8 @@
 function shortage(stock) {
   if (stock < 10 && stock > 0) {
-      return true
-  }
-  else {
-      false
+    return true
+  } else {
+    false
   }
 }
 

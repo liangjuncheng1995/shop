@@ -63,6 +63,7 @@
     "l-counter": "/miniprogram_npm/lin-ui/counter/index",
     "l-search-bar": "/miniprogram_npm/lin-ui/search-bar/index",
     "l-loading": "/miniprogram_npm/lin-ui/loading/index",
+    "l-slide-view": "/miniprogram_npm/lin-ui/slide-view/index",
     "s-counter": "/components/counter/index",
     "s-spu-preview": "/components/spu-preview/index",
     "s-empty": "/components/empty/index"
