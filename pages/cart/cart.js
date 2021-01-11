@@ -20,8 +20,7 @@ Page({
 
   onShow() {
     const cart = new Cart();
-    const cartItems = cart.getAllCartItemFromLocal.items;
-
+    const cartItems = cart.getAllCartItemFromLocal().items;
     if(cart.isEmpty()) {
       this.empty();
       return

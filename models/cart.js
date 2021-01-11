@@ -140,6 +140,16 @@ class Cart {
     return cartData.items.length >= Cart.CART_ITEM_MAX_COUNT;
   }
 
+  //是否超卖
+  static isSoldOut(item) {
+    return item.sku.stock === 0
+  }
+
+  //是否下架
+  static isOnline(item) {
+    return item.sku.online
+  }
+
 
 }
 

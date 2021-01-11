@@ -2,24 +2,87 @@ page {
   background: #f5f5f5;
 }
 
-@font-face {
-  font-family: 'sleeve';  /* project id 1621603 */
+/* @font-face {
+  font-family: 'sleeve'; 
   src: url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.eot');
   src: url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.eot?#iefix') format('embedded-opentype'),
   url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.woff2') format('woff2'),
   url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.woff') format('woff'),
   url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.ttf') format('truetype'),
   url('//at.alicdn.com/t/font_1621603_1ivclq57nw4.svg#sleeve') format('svg');
+} */
+
+@font-face {
+  font-family: 'kapok';  /* project id 1594862 */
+  src: url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.eot');
+  src: url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1594862_oy9ngr13jh.svg#kapok') format('svg');
 }
 
-.sleeve {
-  font-family: sleeve !important;
+.kapok {
+  font-family: kapok !important;
   color: #157658 !important;
 }
 
-.l-icon-home:before {
-  content: '\e602'
+.l-icon-home:before{
+  content:"\e634"
 }
-.l-icon-radio:before {
-  content: '\e6fb'
+
+.l-icon-cart1:before{
+  content:"\e603"
+}
+
+.l-icon-check:before{
+  content: "\e65d"
+}
+
+.l-icon-ads:before {
+  content: "\e640"
+}
+
+.l-icon-about:before {
+  content: "\e608"
+}
+
+.l-icon-unpaid:before {
+  content: "\e61c";
+}
+
+.l-icon-paid:before {
+  content: "\e6c2";
+}
+
+.l-icon-delivered:before {
+  content: "\e60a"
+}
+
+.l-icon-over:before {
+  content: "\e629"
+}
+
+.l-icon-coupon:before{
+  content: "\e670"
+}
+
+.l-icon-order1:before{
+  content: '\e614'
+}
+
+.l-icon-address2:before{
+  content:'\e60f'
+}
+
+.l-icon-sunny1:before{
+  content:"\e6e7"
+}
+
+.l-icon-flower:before{
+  content:"\e61d"
+}
+
+.l-icon-r-arrow:before{
+  content:"\e66e"
 }
