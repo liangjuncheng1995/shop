@@ -11,13 +11,16 @@ import {
 import {
   getWindowHeightRpx
 } from '../../utils/system.js'
+import { Cart } from '../../models/cart.js'
+import { CartItem } from '../../models/cart-item.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    showRealm: false
+    showRealm: false,
+    cartItemCount: 0
   },
 
   /**
@@ -38,6 +41,7 @@ Page({
       explain,
       h
     })
+    this.updateCartItemCount();
   },
   onAddToCart(event) {
     this.setData({
@@ -45,17 +49,42 @@ Page({
       orderWay: ShoppingWay.CART
     })
   },
+
   onBuy(event) {
     this.setData({
       showRealm: true,
       orderWay: ShoppingWay.BUY
     })
   },
+
+  onShopping(event) {
+    const chosenSku = event.detail.sku;
+    const skuCount = event.detail.skuCount;
+
+    if(event.detail.orderWay === ShoppingWay.CART) {
+      
+      const cart = new Cart();
+      const cartItem = new CartItem(chosenSku, skuCount)
+      ;
+      cart.addItem(cartItem);
+      this.updateCartItemCount();
+    }
+  },
+
+  updateCartItemCount() {
+    const cart = new Cart();
+    this.setData({
+      cartItemCount: cart.getCartItemCount(),
+      showRealm: false
+    })
+  },
+
   onGotoHome(event) {
     wx.switchTab({
       url: '/pages/home/home',
     })
   },
+
   onGotoCart(event) {
     wx.switchTab({
       url: '/pages/cart/cart',
@@ -66,7 +95,9 @@ Page({
     this.setData({
       specs: event.detail
     })
-  }
+  },
+
+  
 
 
 })

@@ -1,5 +1,6 @@
 <view class="header">
-  <l-search-bar l-class="input" maxlength="9" bg-color="#f1f1f1" placeholder="输入商品名称" bind:linconfirm='onSearch' bind:lincancel="onCancel">
+  <l-search-bar l-class="input" maxlength="9" bg-color="#f1f1f1" placeholder="输入商品名称" bind:linconfirm='onSearch'
+    bind:lincancel="onCancel">
 
   </l-search-bar>
 </view>
@@ -33,7 +34,8 @@
       </view>
       <view class="history-tags">
         <block wx:for="{{hotTags}}" wx:key="index">
-          <l-tag bind:lintap="onSearch" select="{{item.highlight}}" l-select-class="tag-selected" l-class="tag" name="{{item.title}}">
+          <l-tag bind:lintap="onSearch" select="{{item.highlight}}" l-select-class="tag-selected" l-class="tag"
+            name="{{item.title}}">
             {{item.title}}
           </l-tag>
         </block>
@@ -42,9 +44,14 @@
   </view>
 
   <view wx:else>
-    <block wx:for="{{items}}">
-      <s-spu-preview-r data='{{item}}'></s-spu-preview-r>
-    </block>
+
+    <l-loadmore show end-text="- 没有更多了 -" type="{{loadingType}}" loading-text="努力加载中...">
+      <view slot="content" hidden="{{!search}}" wx:if="{{!isEmpty}}" class="spu-bottom">
+        <block wx:for="{{items}}" wx:key="index">
+          <s-spu-preview-r data="{{item}}"></s-spu-preview-r>
+        </block>
+      </view>
+    </l-loadmore>
   </view>
 
   <l-loading></l-loading>

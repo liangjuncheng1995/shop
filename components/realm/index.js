@@ -152,13 +152,22 @@ Component({
       return stock < currentCount
     },
 
+    noSpec() {
+      const spu = this.properties.spu;
+      return Spu.isNoSpec(spu);
+    },
+
     onSelectCount(event) {
       const currentCount = event.detail.count
       this.data.currentSkuCount = currentCount
 
-      if (this.data.judger.isSkuIntact()) {//判断是否是完整的sku
-        const sku = this.data.judger.getDeterminateSku()
-        this.setStockStatus(sku.stock, currentCount)
+      if(this.noSpec()) {
+        this.setStockStatus(this.getNoSpecSku().stock, currentCount);
+      } else {
+        if (this.data.judger.isSkuIntact()) {//判断是否是完整的sku
+          const sku = this.data.judger.getDeterminateSku()
+          this.setStockStatus(sku.stock, currentCount)
+        }
       }
     },
 
@@ -182,6 +191,45 @@ Component({
       console.log(this.data.skuIntact)
       this.bindFenceGroupData(judger.fenceGroup)
       this.triggerSpecEvent()
+    },
+
+    onBuyOrCart(event) {
+      if(Spu.isNoSpec(this.properties.spu)) {
+        this.shoppingNoSpec();
+      } else {
+        this.shoppingVarious();
+      }
+    },
+
+    shoppingVarious() {
+      const intact = this.data.judger.isSkuIntact();
+      if(!intact) {
+        const missKeys = this.data.judger.getMissingKeys()
+        wx.showToast({
+          icon: "none",
+          title: `请选择：${missKeys.join(', ')}`,
+          duration: 3000
+        })
+        return
+      }
+      this._triggerShoppingEvent(this.data.judger.getDeterminateSku());
+    },
+
+    shoppingNoSpec() {
+      this._triggerShoppingEvent(this.getNoSpecSku());
+    },
+
+    getNoSpecSku() {
+      return this.properties.spu.sku_list[0]
+    },
+
+    _triggerShoppingEvent(sku) {
+      this.triggerEvent('shopping', {
+        orderWay: this.properties.orderWay,
+        spuId: this.properties.spu.id,
+        sku: sku,
+        skuCount: this.data.currentSkuCount
+      })
     }
   }
 })

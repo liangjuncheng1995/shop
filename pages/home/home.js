@@ -39,7 +39,7 @@ Page({
     //   })
     // })
     // Theme.getHomeLocationA()
-    // this.initAllData()
+    this.initAllData()
     this.initBottomSpuList()
   },
 

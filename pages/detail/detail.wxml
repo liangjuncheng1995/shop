@@ -1,7 +1,7 @@
 <!--  -->
 <scroll-view style='height:{{h}}rpx;' scroll-y>
   <swiper class="top" autoplay indicator-dots>
-    <block wx:for="{{spu.spu_img_list}}">
+    <block wx:for="{{spu.spu_img_list}}" wx:key="index">
       <swiper-item>
         <image class="top" mode="aspectFill" src="{{item.img}}"></image>
       </swiper-item>
@@ -32,9 +32,9 @@
 
 </scroll-view>
 <l-popup content-align="bottom" show="{{showRealm}}">
-  <s-realm bind:specchange="onSpecChange" orderWay="{{orderWay}}" spu="{{spu}}"></s-realm>
+  <s-realm bind:shopping="onShopping" bind:specchange="onSpecChange" orderWay="{{orderWay}}" spu="{{spu}}"></s-realm>
 </l-popup>
-<s-tabbar class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
+<s-tabbar cart-item-count="{{cartItemCount}}"  class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
 </s-tabbar>
 
 <!-- <l-icon name="home" l-class="sleeve"></l-icon>

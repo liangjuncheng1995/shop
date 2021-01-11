@@ -1,3 +1,5 @@
+const { Cart } = require("../../models/cart")
+
 // pages/cart/cart.js
 Page({
 
@@ -5,62 +7,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    cartItems: [],
+    isEmpty: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad() {
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  onShow() {
+    const cart = new Cart();
+    const cartItems = cart.getAllCartItemFromLocal.items;
 
+    if(cart.isEmpty()) {
+      this.empty();
+      return
+    }
+
+    this.setData({
+      cartItems
+    })
+    this.notEmpty();
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  empty() {
+    this.setData({
+      isEmpty: true
+    })
+    wx.hideTabBarRedDot({
+      index: 2, //tabbar 从左到右序号为2的tab
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  notEmpty() {
+    this.setData({
+      isEmpty: false
+    });
+    wx.showTabBarRedDot({
+      index: 2
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  
 })

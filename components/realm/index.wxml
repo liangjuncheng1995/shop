@@ -36,7 +36,7 @@
   </view>
 
 </scroll-view>
-<view wx:if="{{!outStock}}" class="bottom-btn">
+<view wx:if="{{!outStock}}" bindtap="onBuyOrCart" class="bottom-btn">
   <text wx:if="{{orderWay==='cart'}}">加入购物车</text>
   <text wx:else>立即购买</text>
 </view>

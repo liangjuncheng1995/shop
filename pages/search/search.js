@@ -19,13 +19,14 @@ Page({
    */
   data: {
     historyTags: [],
+    searchPaging: null,
     items: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     const historyTags = history.get()
     const hotTags = await Tag.getSearchTags()
     this.setData({
@@ -48,16 +49,43 @@ Page({
     this.setData({
       historyTags: history.get()
     })
+    this.showLoading()
 
     const paging = Search.search(keyword)
+    this.setData({
+      searchPaging: paging
+    })
+
+    const data = await paging.getMoreData()
+    this.hideLoading()
+    this.bindItems(data)
+  },
+
+  showLoading() {
     wx.lin.showLoading({
       color: "#157658",
       type: "flash",
       fullScreen: true
     })
-    const data = await paging.getMoreData()
+  },
+
+  hideLoading() {
     wx.lin.hideLoading()
+  },
+
+  async onReachBottom() {
+    const data = await this.data.searchPaging.getMoreData()
+    if (!data) {
+      return
+    }
+
     this.bindItems(data)
+
+    if (!data.moreData) {
+      this.setData({
+        loadingType: "end"
+      })
+    }
   },
 
   onCancel(event) {
