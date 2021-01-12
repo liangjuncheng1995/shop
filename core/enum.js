@@ -15,8 +15,15 @@ const SpuListType = {
   LATEST: 'latest'
 }
 
+const AuthAddress = {
+  DENY: 'deny',
+  NOT_AUTH: 'not_auth',
+  AUTHORIZED: 'authorized'
+}
+
 export {
   CellStatus,
   ShoppingWay,
-  SpuListType
+  SpuListType,
+  AuthAddress
 }

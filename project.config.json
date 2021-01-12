@@ -25,7 +25,7 @@
     "nodeModules": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.9.4",
+  "libVersion": "2.14.3",
   "appid": "wx96ede89c1842a507",
   "projectname": "shop",
   "debugOptions": {
