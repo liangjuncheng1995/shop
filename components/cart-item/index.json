@@ -1,6 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "s-checkbox": "/components/checkbox/index"
+    
   }
 }

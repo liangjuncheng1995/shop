@@ -1,4 +1,5 @@
 const { Cart } = require("../../models/cart")
+var cart = new Cart();
 
 // pages/cart/cart.js
 Page({
@@ -9,6 +10,7 @@ Page({
   data: {
     cartItems: [],
     isEmpty: false,
+    allChecked: false
   },
 
   /**
@@ -19,7 +21,7 @@ Page({
   },
 
   onShow() {
-    const cart = new Cart();
+    var cart = new Cart();
     const cartItems = cart.getAllCartItemFromLocal().items;
     if(cart.isEmpty()) {
       this.empty();
@@ -30,6 +32,7 @@ Page({
       cartItems
     })
     this.notEmpty();
+    this.isAllChecked();
   },
 
   empty() {
@@ -49,6 +52,35 @@ Page({
       index: 2
     })
   },
+
+  // 是否全选,可以直接去缓存中遍历所有数据的 checked 字段状态如何就行了
+  isAllChecked() {
+    var cart = new Cart();
+    const allChecked = cart.isAllChecked();
+    console.log(allChecked)
+    this.setData({
+      allChecked
+    })
+  },
+
+  onDeleteItem(event) {
+    this.isAllChecked();
+  },
+
+  onSingleCheck(event) {
+    this.isAllChecked();
+  },
+
+  onCheckAll(event) {
+    const checked = event.detail.checked;
+    cart.checkAll(checked);
+    const cartItems = cart.getAllCartItemFromLocal().items;
+    this.setData({
+      cartItems
+    })
+  }
+
+
 
   
 })

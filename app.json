@@ -66,6 +66,7 @@
     "l-slide-view": "/miniprogram_npm/lin-ui/slide-view/index",
     "s-counter": "/components/counter/index",
     "s-spu-preview": "/components/spu-preview/index",
-    "s-empty": "/components/empty/index"
+    "s-empty": "/components/empty/index",
+    "s-checkbox": "/components/checkbox/index"
   }
 }

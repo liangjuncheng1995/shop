@@ -10,7 +10,7 @@ class Cart {
 
   constructor() {
     /**
-     * 单例模式 保证全局购物车数据是一个对象
+     * 单例模式 保证全局购物车数据是一个对象,在页面的任何地方实例化，数据会进行共享
      */
     if (typeof Cart.instance === "Object") {
       return Cart.instance
@@ -62,6 +62,8 @@ class Cart {
 
   //更新缓存中的数据
   _refreshStorage() {
+    console.log("刷新缓存的数据：")
+    console.log(this._cartData)
     wx.setStorageSync(Cart.STORAGE_KEY, this._cartData);
   }
 
@@ -148,6 +150,35 @@ class Cart {
   //是否下架
   static isOnline(item) {
     return item.sku.online
+  }
+
+  //购物车item checkbox选中和不选中数据状态切换
+  checkItem(skuId) {
+    const oldItem = this.findEqualItem(skuId);
+    oldItem.checked = !oldItem.checked;
+    this._refreshStorage();
+  }
+
+  //判断购物车的数据是否全选
+  isAllChecked() {
+    let allChecked = true;
+    const cartItems = this._getCartData().items;
+    for(let item of cartItems) {
+      if(!item.checked) {
+        allChecked = false
+        break;
+      }
+    }
+    return allChecked;
+  }
+
+  // 刷新购物车中的缓存为全选或非全选
+  checkAll(checked) {
+    const cartData = this._getCartData();
+    cartData.items.forEach(item => {
+      item.checked = checked;
+    })
+    this._refreshStorage();
   }
 
 
