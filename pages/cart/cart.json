@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "s-cart-item": "/components/cart-item/index"
-    
+    "s-cart-item": "/components/cart-item/index",
+    "l-water-flow": "/miniprogram_npm/lin-ui/water-flow/index"
   }
 }

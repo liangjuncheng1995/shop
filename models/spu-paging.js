@@ -14,7 +14,8 @@ class SpuPaging {
 
   static getHotPaging() {
     return new Paging({
-      url: `/spu/hotLatest`
+      // url: `/spu/hotLatest`
+      url: `/spu/latest`
     }, 5);
   }
   // 1. 数据为空的情况，

@@ -84,6 +84,12 @@
         {
           "name": "购物车",
           "pathName": "pages/cart/cart",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "订单页面",
+          "pathName": "pages/order/order",
           "scene": null
         }
       ]

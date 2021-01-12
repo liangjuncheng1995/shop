@@ -34,7 +34,6 @@ Page({
     const windowHeight = await getWindowHeightRpx()
     const h = windowHeight - 100
 
-    console.log(explain)
 
     this.setData({
       spu,

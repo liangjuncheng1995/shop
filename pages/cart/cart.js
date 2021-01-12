@@ -1,6 +1,12 @@
-const { Calculator } = require("../../models/calculator");
-const { Cart } = require("../../models/cart");
-const { SpuPaging } = require("../../models/spu-paging");
+const {
+  Calculator
+} = require("../../models/calculator");
+const {
+  Cart
+} = require("../../models/cart");
+const {
+  SpuPaging
+} = require("../../models/spu-paging");
 var cart = new Cart();
 
 // pages/cart/cart.js
@@ -32,7 +38,7 @@ Page({
     const paging = SpuPaging.getHotPaging();
     this.data.spuPaging = paging;
     const data = await paging.getMoreData();
-    if(!data) {
+    if (!data) {
       return;
     }
     wx.lin.renderWaterFlow(data.items);
@@ -40,7 +46,7 @@ Page({
 
   onShow() {
     const cartItems = cart.getAllCartItemFromLocal().items;
-    if(cart.isEmpty()) {
+    if (cart.isEmpty()) {
       this.empty();
       return
     }
@@ -116,9 +122,36 @@ Page({
 
   onCountFloat(event) {
     this.refreshCartData();
-  }
+  },
+
+  onSettle(event) {
+    if(this.data.totalSkuCount <= 0) {
+      return;
+    } 
+    wx.navigateTo({
+      url: `/pages/order/order?way=${1}`,
+    })
+  },
+
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: async function () {
+    const data = await this.data.spuPaging.getMoreData();
+    if (!data) {
+      return;
+    }
+    wx.lin.renderWaterFlow(data.items);
+    if (!data.moreData) {
+      this.setData({
+        loadingType: 'end',
+        logo: true
+      });
+    }
+  },
 
 
 
-  
+
 })

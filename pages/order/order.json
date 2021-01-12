@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "s-address": "/components/address/index"
+  }
+}

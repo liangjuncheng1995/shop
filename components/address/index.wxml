@@ -1,0 +1,7 @@
+<view class="container">
+  <l-button open-type="getUserInfo" open wx:if="{{!hasChosen}}" bind:lintap="onChooseAddress" plain width="360" height="88" shape="square" icon="ads"
+    icon-size="28" icon-color="#157658" l-icon-class="kapok" l-class="btn">
+    选择地址
+  </l-button>
+  <image class="bottom-img" src="../imgs/bottom@address.png"></image>
+</view>

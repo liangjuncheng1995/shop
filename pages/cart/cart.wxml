@@ -32,6 +32,8 @@
     <l-water-flow generic:l-water-flow-item="s-spu-preview"></l-water-flow>
   </view>
 </view>
-
+<view wx:if="{{logo}}" class="logo-container">
+  <image class="logo" src="../../imgs/tabbar/logo.png" />
+</view>
 
 <!-- <view style="height:88rpx;"></view> -->

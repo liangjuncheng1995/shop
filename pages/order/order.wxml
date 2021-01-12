@@ -1,0 +1,4 @@
+<view class="container">
+  <!-- 收获地址 -->
+  <s-address bind:address="onChooseAddress"></s-address>
+</view>
