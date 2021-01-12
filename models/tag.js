@@ -5,7 +5,7 @@ import {
 class Tag {
   static getSearchTags() {
     return Http.request({
-      url: `tag/type/1`
+      url: `/tag/type/1`
     })
   }
 }

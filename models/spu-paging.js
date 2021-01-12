@@ -1,11 +1,21 @@
-import {Http} from '../utils/http.js'
-import { Paging } from '../utils/paging.js'
+import {
+  Http
+} from '../utils/http.js'
+import {
+  Paging
+} from '../utils/paging.js'
 class SpuPaging {
   static getLatestPaging() {
     return new Paging({
-      url: `spu/latest`, 
-    },5)
+      url: `/spu/latest`,
+    }, 5)
     // Http.request(``)
+  }
+
+  static getHotPaging() {
+    return new Paging({
+      url: `/spu/hotLatest`
+    }, 5);
   }
   // 1. 数据为空的情况，
   // 2.最后一页，还有没有更多的数据

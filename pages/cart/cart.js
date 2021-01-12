@@ -1,4 +1,6 @@
-const { Cart } = require("../../models/cart")
+const { Calculator } = require("../../models/calculator");
+const { Cart } = require("../../models/cart");
+const { SpuPaging } = require("../../models/spu-paging");
 var cart = new Cart();
 
 // pages/cart/cart.js
@@ -10,18 +12,33 @@ Page({
   data: {
     cartItems: [],
     isEmpty: false,
-    allChecked: false
+    allChecked: false,
+    totalPrice: 0,
+    totalSkuCount: 0
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 生命周期函数--监听页面加载,数据新鲜度
    */
-  onLoad() {
+  async onLoad() {
+    const cartData = cart.getAllSkuFromServer();
+    this.setData({
+      cartItems: cartData.items
+    });
+    this.initBottomSpuList();
+  },
 
+  async initBottomSpuList() {
+    const paging = SpuPaging.getHotPaging();
+    this.data.spuPaging = paging;
+    const data = await paging.getMoreData();
+    if(!data) {
+      return;
+    }
+    wx.lin.renderWaterFlow(data.items);
   },
 
   onShow() {
-    var cart = new Cart();
     const cartItems = cart.getAllCartItemFromLocal().items;
     if(cart.isEmpty()) {
       this.empty();
@@ -33,6 +50,23 @@ Page({
     })
     this.notEmpty();
     this.isAllChecked();
+    this.refreshCartData();
+  },
+
+  refreshCartData() {
+    const checkedItems = cart.getCheckedItems();
+    const calculator = new Calculator(checkedItems);
+    calculator.calc();
+    this.setCalcData(calculator);
+  },
+
+  setCalcData(calculator) {
+    const totalPrice = calculator.getTotalPrice();
+    const totalSkuCount = calculator.getTotalSkuCount();
+    this.setData({
+      totalPrice,
+      totalSkuCount
+    })
   },
 
   empty() {
@@ -55,9 +89,7 @@ Page({
 
   // 是否全选,可以直接去缓存中遍历所有数据的 checked 字段状态如何就行了
   isAllChecked() {
-    var cart = new Cart();
     const allChecked = cart.isAllChecked();
-    console.log(allChecked)
     this.setData({
       allChecked
     })
@@ -65,19 +97,25 @@ Page({
 
   onDeleteItem(event) {
     this.isAllChecked();
+    this.refreshCartData();
   },
 
   onSingleCheck(event) {
     this.isAllChecked();
+    this.refreshCartData();
   },
 
   onCheckAll(event) {
     const checked = event.detail.checked;
     cart.checkAll(checked);
-    const cartItems = cart.getAllCartItemFromLocal().items;
     this.setData({
-      cartItems
+      cartItems: this.data.cartItems
     })
+    this.refreshCartData();
+  },
+
+  onCountFloat(event) {
+    this.refreshCartData();
   }
 
 

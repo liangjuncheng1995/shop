@@ -10,7 +10,7 @@ class Spu {
 
   static getDetail(id) {
     return Http.request({
-      url: `spu/id/${id}/detail`
+      url: `/spu/id/${id}/detail`
     })
   }
 }

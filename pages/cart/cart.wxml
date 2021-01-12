@@ -24,3 +24,14 @@
     <text>结算 ( {{totalSkuCount}} )</text>
   </view>
 </view>
+
+<!-- 热门推荐-瀑布流 -->
+<view class="hot-container">
+  <view class="hot-title">-热门推荐-</view>
+  <view class="hot-spu">
+    <l-water-flow generic:l-water-flow-item="s-spu-preview"></l-water-flow>
+  </view>
+</view>
+
+
+<!-- <view style="height:88rpx;"></view> -->

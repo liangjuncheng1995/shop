@@ -2,7 +2,7 @@
 
   <view class="icons">
     <view bind:tap="onGoToHome">
-      <l-icon size="46" name="home" l-class="sleeve"></l-icon>
+      <l-icon size="46" name="home" l-class="kapok"></l-icon>
       <text>首页</text>
     </view>
 

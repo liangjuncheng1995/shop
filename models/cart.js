@@ -1,3 +1,7 @@
+import {
+  Sku
+} from "./sku"
+
 class Cart {
   static SKU_MIN_COUNT = 1
   static SKU_MAX_COUNT = 77 //单个sku数量限制
@@ -12,12 +16,13 @@ class Cart {
     /**
      * 单例模式 保证全局购物车数据是一个对象,在页面的任何地方实例化，数据会进行共享
      */
-    if (typeof Cart.instance === "Object") {
+    if (typeof Cart.instance === "object") {
       return Cart.instance
     }
     Cart.instance = this
     return this
   }
+
 
   //在缓存中获取购物车全部数据
   getAllCartItemFromLocal() {
@@ -62,8 +67,6 @@ class Cart {
 
   //更新缓存中的数据
   _refreshStorage() {
-    console.log("刷新缓存的数据：")
-    console.log(this._cartData)
     wx.setStorageSync(Cart.STORAGE_KEY, this._cartData);
   }
 
@@ -163,8 +166,8 @@ class Cart {
   isAllChecked() {
     let allChecked = true;
     const cartItems = this._getCartData().items;
-    for(let item of cartItems) {
-      if(!item.checked) {
+    for (let item of cartItems) {
+      if (!item.checked) {
         allChecked = false
         break;
       }
@@ -180,6 +183,86 @@ class Cart {
     })
     this._refreshStorage();
   }
+
+  //获取全部被选中的商品
+  getCheckedItems() {
+    const cartItems = this._getCartData().items;
+    const checkedCartItems = [];
+    cartItems.forEach(item => {
+      if (item.checked) {
+        checkedCartItems.push(item);
+      }
+    });
+    return checkedCartItems;
+  }
+
+  //修改购物车中商品数量
+  replaceItemCount(skuId, newCount) {
+    const oldItem = this.findEqualItem(skuId);
+    if (!oldItem) {
+      console.error('异常情况，更新CartItem中的数量不应当找不到相应数据');
+      return;
+    }
+    if (newCount < 1) {
+      console.error('异常情况，CartItem的Count不可能小于1');
+      return;
+    }
+    oldItem.count = newCount;
+    if (oldItem.count >= Cart.SKU_MAX_COUNT) {
+      oldItem.count = Cart.SKU_MAX_COUNT
+    }
+    this._refreshStorage();
+  }
+
+  //同步服务器商品数据
+  async getAllSkuFromServer() {
+    const cartData = this._getCartData();
+    if (cartData.items.length === 0) {
+      return {
+        items: []
+      }
+    }
+    const skuIds = this.getSkuIds();
+    const serverData = await Sku.getSkusByIds(skuIds);
+    this._refreshByServerData(serverData);
+    this._refreshStorage();
+    return this._getCartData();
+
+  }
+
+  //获取一组skuId调用服务器获取最新数据
+  getSkuIds() {
+    const cartData = this._getCartData();
+    if (cartData.items.length === 0) {
+      return []
+    }
+    return cartData.items.map(item => item.skuId);
+  }
+
+  // 将服务器最新数据更新至缓存
+  _refreshByServerData(serverData) {
+    const cartData = this._getCartData();
+    cartData.items.forEach(item => {
+      this._setLatestCartItem(item, serverData);
+    })
+  }
+
+  //将服务器中的sku数据设置到缓存中
+  _setLatestCartItem(item, serverData) {
+    let removed = true;
+    for (let sku of serverData) {
+      if (sku.id === item.skuId) {
+        removed = false;
+        item.sku = sku;//更新数据
+        break;
+      }
+    }
+    if (removed) {//在服务器中找不到在线上的数据，那么久下线
+      item.sku.online = false;
+    }
+  }
+
+
 
 
 }

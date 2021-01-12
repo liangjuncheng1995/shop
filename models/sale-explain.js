@@ -4,7 +4,7 @@ import {
 class SaleExplain {
   static async getFixed() {
     const explains = await Http.request({
-      url: 'sale_explain/fixed'
+      url: '/sale_explain/fixed'
     })
     return explains.map(e => {
       return e.text

@@ -6,7 +6,7 @@ class Categories {
   subs = []
   async getAll() {
     const data = await Http.request({
-      url: 'category/all'
+      url: '/category/all'
     })
 
     this.roots = data.roots
