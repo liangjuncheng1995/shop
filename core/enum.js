@@ -35,11 +35,22 @@ const CouponCenterType = {
   SPU_CATEGORY: 'spu_category'
 }
 
-const CouponStatus = {
+const CouponType = { //优惠券类型
+  FULL_MINUS: 1,
+  FULL_OFF: 2,
+  NO_THRESHOLD_MINUS: 3
+}
+
+const CouponStatus = { //优惠券的使用状态
   CAN_COLLECT: 0,
   AVAILABLE: 1,
   USED: 2,
   EXPIRED: 3
+}
+
+const CouponOperate = {
+  PICK: 'pick',
+  UNPICK: 'unpick'
 }
 
 export {
@@ -49,5 +60,7 @@ export {
   AuthAddress,
   OrderExceptionType,
   CouponCenterType,
-  CouponStatus
+  CouponStatus,
+  CouponType,
+  CouponOperate
 }
