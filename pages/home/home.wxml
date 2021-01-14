@@ -14,7 +14,7 @@
 
     <s-category-grid grid="{{grid}}"></s-category-grid>
 
-    <image class="activity" src="{{activityD.entrance_img}}"></image>
+    <image data-aname="a-2" bindtap="onGotoCoupons" class="activity" src="{{activityD.entrance_img}}"></image>
 
     <s-spu-scroll l-class="spu-scroll" theme="{{themeE}}" wx:if="{{themeE.online}}" spu-list="{{themeESpu}}"></s-spu-scroll>
 

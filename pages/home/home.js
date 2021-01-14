@@ -17,6 +17,7 @@ import {
 import {
   SpuPaging
 } from '../../models/spu-paging.js'
+import { CouponCenterType } from '../../core/enum.js'
 
 Page({
 
@@ -132,6 +133,13 @@ Page({
         loadingType: 'end'
       })
     }
+  },
+
+  onGotoCoupons(event) {
+    const name = event.currentTarget.dataset.aname;
+    wx.navigateTo({
+      url: `/pages/coupon/coupon?name=${name}&type=${CouponCenterType.ACTIVITY}`
+    })
   },
 
 

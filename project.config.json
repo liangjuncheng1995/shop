@@ -90,6 +90,13 @@
         {
           "name": "订单页面",
           "pathName": "pages/order/order",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/coupon/coupon",
+          "pathName": "pages/coupon/coupon",
+          "query": "name=a-2",
           "scene": null
         }
       ]

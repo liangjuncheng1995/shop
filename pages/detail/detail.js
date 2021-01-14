@@ -3,6 +3,7 @@ import {
   Spu
 } from '../../models/spu.js'
 import {
+  CouponCenterType,
   ShoppingWay
 } from '../../core/enum.js'
 import {
@@ -11,8 +12,15 @@ import {
 import {
   getWindowHeightRpx
 } from '../../utils/system.js'
-import { Cart } from '../../models/cart.js'
-import { CartItem } from '../../models/cart-item.js'
+import {
+  Cart
+} from '../../models/cart.js'
+import {
+  CartItem
+} from '../../models/cart-item.js'
+import {
+  Coupon
+} from '../../models/coupon.js'
 Page({
 
   /**
@@ -20,28 +28,57 @@ Page({
    */
   data: {
     showRealm: false,
-    cartItemCount: 0
+    cartItemCount: 0,
+    optionName: "",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function(options) {
+  onLoad: async function (options) {
     const pid = options.pid
     const spu = await Spu.getDetail(pid)
 
-    const explain = await SaleExplain.getFixed()
+    const coupons = await Coupon.getTop2CouponsByCategory(spu.category_id);
+
+    // const explain = await SaleExplain.getFixed()
     const windowHeight = await getWindowHeightRpx()
     const h = windowHeight - 100
 
 
     this.setData({
       spu,
-      explain,
-      h
+      // explain,
+      h,
+      coupons
     })
     this.updateCartItemCount();
+    this.setOptionName(spu);
   },
+
+  async setOptionName(spu) {
+    let coupons = await Coupon.getCouponsByCategory(spu.category_id);
+    const wholeStoreCoupons = await Coupon.getWholeStoreCoupons();
+    coupons = coupons.concat(wholeStoreCoupons);
+    let isOk = true;
+    console.log(coupons);
+    for (let index = 0; index < coupons.length; index++) {
+      if (coupons[index].status !== 1) {
+        isOk = false;
+        break;
+      }
+    }
+    if (isOk) {
+      this.setData({
+        optionName: '立即查看'
+      });
+    } else {
+      this.setData({
+        optionName: '立即领取'
+      });
+    }
+  },
+
   onAddToCart(event) {
     this.setData({
       showRealm: true,
@@ -60,11 +97,10 @@ Page({
     const chosenSku = event.detail.sku;
     const skuCount = event.detail.skuCount;
 
-    if(event.detail.orderWay === ShoppingWay.CART) {
-      
+    if (event.detail.orderWay === ShoppingWay.CART) {
+
       const cart = new Cart();
-      const cartItem = new CartItem(chosenSku, skuCount)
-      ;
+      const cartItem = new CartItem(chosenSku, skuCount);
       cart.addItem(cartItem);
       this.updateCartItemCount();
     }
@@ -96,7 +132,15 @@ Page({
     })
   },
 
-  
+  onGoToCouponCenter() {
+    const type = CouponCenterType.SPU_CATEGORY;
+    const cid = this.data.spu.category_id;
+    wx.navigateTo({
+      url: `/pages/coupon/coupon?cid=${cid}&type=${type}`
+    })
+  }
+
+
 
 
 })

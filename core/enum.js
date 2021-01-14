@@ -21,9 +21,33 @@ const AuthAddress = {
   AUTHORIZED: 'authorized'
 }
 
+const OrderExceptionType = {
+  BEYOND_STOCK: 'beyond_stock',
+  BEYOND_SKU_MAX_COUNT: 'beyond_sku_max_count',
+  BEYOND_ITEM_MAX_COUNT: 'beyond_item_max_count',
+  SOLD_OUT: 'sold_out',
+  NOT_ON_SALE: 'not_on_sale',
+  EMPTY: 'empty'
+}
+
+const CouponCenterType = {
+  ACTIVITY: 'activity',
+  SPU_CATEGORY: 'spu_category'
+}
+
+const CouponStatus = {
+  CAN_COLLECT: 0,
+  AVAILABLE: 1,
+  USED: 2,
+  EXPIRED: 3
+}
+
 export {
   CellStatus,
   ShoppingWay,
   SpuListType,
-  AuthAddress
+  AuthAddress,
+  OrderExceptionType,
+  CouponCenterType,
+  CouponStatus
 }

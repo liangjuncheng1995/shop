@@ -262,6 +262,31 @@ class Cart {
     }
   }
 
+  //获取缓存被选中的sku商品
+  getCheckedSkuIds() {
+    const cartData = this._getCartData();
+    if(cartData.items.length === 0) {
+      return [];
+    }
+    const skuIds = [];
+    cartData.items.forEach(item => {
+      if(item.checked) {
+        skuIds.push(item.sku.id);
+      }
+    });
+    return skuIds;
+  }
+
+  getSkuCountBySkuId(skuId) {
+    const cartData = this._getCartData();
+    const item = cartData.items.find(item  => 
+      item.skuId === skuId);
+      if(!item) {
+        console.error('在订单里寻找CartItem时不应当出现找不到的情况');
+      }
+      return item.count;
+  }
+
 
 
 

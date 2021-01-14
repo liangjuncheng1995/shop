@@ -9,6 +9,20 @@
   </swiper>
   <s-spu-description spu="{{spu}}"></s-spu-description>
 
+  <!-- 优惠券的领取 -->
+  <view bind:tap="onGoToCouponCenter" class="coupon-container" wx:if="{{coupons.length!=0}}">
+    <view class="coupon-left">
+      <block wx:for="{{coupons}}" wx:key="index">
+        <s-coupon-mini text="{{item.title}}"></s-coupon-mini>
+      </block>
+    </view>
+    <view class="coupon-right">
+      <text>{{optionName}}</text>
+      <l-icon name="right" color="#157658" size="24"></l-icon>
+    </view>
+  </view>
+
+
   <view bind:tap="onAddToCart" class="sku-pending" wx:if="{{!specs.noSpec}}">
     <view class="specs">
       <text wx:if="{{!specs.skuIntact}}">请选择：</text>
@@ -20,9 +34,9 @@
       <l-icon name="right" color="#157658" size="24"></l-icon>
     </view>
   </view>
-  <view class="explain">
+  <!-- <view class="explain">
     <s-sale-explain texts="{{explain}}"></s-sale-explain>
-  </view>
+  </view> -->
 
   <view class="detail-img-container">
     <block wx:for="{{spu.spu_detail_img_list}}" wx:key="index">
@@ -34,7 +48,8 @@
 <l-popup content-align="bottom" show="{{showRealm}}">
   <s-realm bind:shopping="onShopping" bind:specchange="onSpecChange" orderWay="{{orderWay}}" spu="{{spu}}"></s-realm>
 </l-popup>
-<s-tabbar cart-item-count="{{cartItemCount}}"  class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart" bind:addtocart="onAddToCart" bind:buy="onBuy">
+<s-tabbar cart-item-count="{{cartItemCount}}" class="tabbar" bind:gotohome="onGotoHome" bind:gotocart="onGotoCart"
+  bind:addtocart="onAddToCart" bind:buy="onBuy">
 </s-tabbar>
 
 <!-- <l-icon name="home" l-class="sleeve"></l-icon>

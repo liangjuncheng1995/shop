@@ -1,4 +1,11 @@
 // pages/order/order.js
+import { Cart } from "../../models/cart";
+import { Coupon } from "../../models/coupon";
+import { CouponBO } from "../../models/coupon-bo";
+import { Order } from "../../models/order";
+import { OrderItem } from "../../models/order-item";
+import { Sku } from "../../models/sku";
+const cart = new Cart();
 Page({
 
   /**
@@ -11,56 +18,56 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
+    let orderItems; 
+    let localItemCount;
+
+    const skuIds = cart.getCheckedSkuIds();
+    orderItems = await this.getCartOrderItems(skuIds);
+    localItemCount = skuIds.length;
+
+    const order = new Order(orderItems, localItemCount);
+
+    try {
+      order.checkOrderIsOk();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+
+    const coupons = await Coupon.getMySelfWithCategory();
+    const couponBOList = this.packageCouponBOList(coupons, order);
+
+    this.setData({
+      orderItems,
+      couponBOList
+    })
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  packageCouponBOList(coupons, order) {
+    return coupons.map(coupon => {
+      const couponBO = new CouponBO(coupon);
+      // couponBO.meetCondition(order);
+      return couponBO;
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  async getSingleOrderItems(skuId, count) {
+    const skus = await Sku.getSkusByIds(skuId);
+    return [new OrderItem(skus[0], count)];
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  async getCartOrderItems(skuIds) {// 同步最新的SKU数据
+    const skus = await Sku.getSkusByIds(skuIds);
+    const orderItems = this.packageOrderItems(skus);
+    return orderItems;
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  packageOrderItems(skus) {
+    return skus.map(sku => {
+      const count = cart.getSkuCountBySkuId(sku.id);
+      return new OrderItem(sku, count);
+    })
   }
 })

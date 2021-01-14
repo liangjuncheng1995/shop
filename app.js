@@ -1,4 +1,5 @@
-const { Cart } = require("./models/cart")
+const { Cart } = require("./models/cart");
+const { Token } = require("./models/token");
 
 //app.js
 App({
@@ -9,5 +10,7 @@ App({
         index: 2,
       })
     }
+    const token = new Token();
+    token.verify();
   }
 })
