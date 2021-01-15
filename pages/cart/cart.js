@@ -1,3 +1,4 @@
+const { ShoppingWay } = require("../../core/enum");
 const {
   Calculator
 } = require("../../models/calculator");
@@ -129,7 +130,7 @@ Page({
       return;
     } 
     wx.navigateTo({
-      url: `/pages/order/order?way=${1}`,
+      url: `/pages/order/order?way=${ShoppingWay.CART}`,
     })
   },
 

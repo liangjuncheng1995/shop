@@ -1,12 +1,19 @@
 import {
-  OrderExceptionType
+  OrderExceptionType,
+  OrderStatus
 } from "../core/enum";
 import {
   OrderException
 } from "../core/order-exception";
 import {
+  Http
+} from "../utils/http";
+import {
   accAdd
 } from "../utils/number";
+import {
+  Paging
+} from "../utils/paging";
 
 class Order {
   orderItems;
@@ -80,8 +87,90 @@ class Order {
     return false
   }
 
+  getOrderSkuInfoList() {
+    return this.orderItems.map(item => {
+      return {
+        id: item.skuId,
+        count: item.count
+      }
+    })
+  }
 
 
+  //向服务器发送提交订单请求
+  static async postOrderToServer(orderPost) {
+    return await Http.request({
+      url: '/order',
+      method: 'POST',
+      data: orderPost,
+      throwError: true
+    })
+  }
+
+  //获取未支付的订单数量
+  static async getUnpaidCount() {
+    const orderPage = await Http.request({
+      url: `/order/status/unpaid`,
+      data: {
+        start: 0,
+        count: 1
+      }
+    });
+    return orderPage.total;
+  }
+
+  //获取已发货的订单数量
+  static async getDeliveredCount() {
+    const orderPage = await Http.request({
+      url: `/order/by/status/${OrderStatus.DELIVERED}`,
+      data: {
+        start: 0,
+        count: 1
+      }
+    });
+    return orderPage.total;
+  }
+
+  /**
+   * 获取已取消的订单数量
+   */
+  static getPagingCanceled() {
+    return new Paging({
+      url: `/order/status/canceled`
+    })
+  }
+
+  /**
+   * 获取未支付的订单列表
+   */
+  static getPagingUnpaid() {
+    return new Paging({
+      url: `/order/status/unpaid`
+    });
+  }
+
+  /**
+   * 获取已支付的订单数量
+   */
+  static async getPaidCount() {
+    const orderPage = await Http.request({
+      url: `/order/by/status/${OrderStatus.PAID}`,
+      data: {
+        start: 0,
+        count: 1
+      }
+    });
+    return orderPage.total;
+  }
+  /**
+   * 获取指定状态的订单列表
+   * @param {Integer} status 
+   */
+  static getPagingByStatus(status) {
+    return new Paging({
+      url: `/order/by/status/${status}`
+    });
+  }
 }
 
 export {

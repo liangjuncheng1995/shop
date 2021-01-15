@@ -8,7 +8,11 @@
     "pages/search/search",
     "pages/spu-list/spu-list",
     "pages/order/order",
-    "pages/coupon/coupon"
+    "pages/coupon/coupon",
+    "pages/pay-success/pay-success",
+    "pages/my-order/my-order",
+    "pages/order-detail/order-detail",
+    "pages/my-coupon/my-coupon"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -67,6 +71,10 @@
     "l-loading": "/miniprogram_npm/lin-ui/loading/index",
     "l-slide-view": "/miniprogram_npm/lin-ui/slide-view/index",
     "l-dialog": "/miniprogram_npm/lin-ui/dialog/index",
+    "l-status-show": "/miniprogram_npm/lin-ui/status-show/index",
+    "l-avatar": "/miniprogram_npm/lin-ui/avatar/index",
+    "l-list": "/miniprogram_npm/lin-ui/list/index",
+    "l-countdown": "/miniprogram_npm/lin-ui/countdown/index",
     "s-counter": "/components/counter/index",
     "s-spu-preview": "/components/spu-preview/index",
     "s-empty": "/components/empty/index",

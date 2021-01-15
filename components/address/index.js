@@ -31,6 +31,9 @@ Component({
           address,
           hasChosen: true
         })
+        this.triggerEvent('address', {
+          address
+        })
       }
     }
   },
@@ -66,6 +69,9 @@ Component({
           hasChosen: true
         })
         Address.setLocal(res);
+        this.triggerEvent('address', {
+          address: res
+        })
       }
     },
 

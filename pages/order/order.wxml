@@ -42,3 +42,12 @@
     提交订单
   </l-button>
 </view>
+
+<!-- 提交订单错误提醒框 -->
+<l-dialog content-color="#333333" type="alert" title="订单生成失败" l-confirm-class="dialog-confirm" show="{{orderFail}}"
+  content="{{orderFailMsg}}" />
+
+<!-- 订单异常提醒 -->
+<l-status-show show="{{!isOk}}" describe="订单中包含有售罄/下架/超出数量的商品" type="data" />
+
+<l-loading></l-loading>

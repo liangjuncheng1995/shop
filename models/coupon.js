@@ -11,6 +11,12 @@ class Coupon {
     });
   }
 
+  static getMyCoupons(status) {
+    return Http.request({
+      url: `/coupon/myself/by/status/${status}`
+    });
+  }
+
   static async getCouponsByCategory(cid) {
     return await Http.request({
       url: `/coupon/by/category/${cid}`,

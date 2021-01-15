@@ -98,6 +98,17 @@
           "pathName": "pages/coupon/coupon",
           "query": "name=a-2",
           "scene": null
+        },
+        {
+          "name": "支付成功",
+          "pathName": "pages/pay-success/pay-success",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "我的页面",
+          "pathName": "pages/my/my",
+          "scene": null
         }
       ]
     }
